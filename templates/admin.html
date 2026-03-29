@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5 text-white">
+  <h2>📊 Admin Dashboard</h2>
+  <div class="row mt-4">
+    <div class="col-md-3">
+      <div class="card glass-effect bg-gradient-primary shadow p-3 text-center">
+        <h5>🎤 Authentications</h5>
+        <h3>{{ total_auths }}</h3>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card glass-effect bg-gradient-danger shadow p-3 text-center">
+        <h5>🚨 Flagged Voices</h5>
+        <h3>{{ flagged }}</h3>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card glass-effect bg-gradient-info shadow p-3 text-center">
+        <h5>🎙️ Podcasts</h5>
+        <h3>{{ total_podcasts }}</h3>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card glass-effect bg-gradient-success shadow p-3 text-center">
+        <h5>🧠 Ollama Queries</h5>
+        <h3>{{ total_ollama }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

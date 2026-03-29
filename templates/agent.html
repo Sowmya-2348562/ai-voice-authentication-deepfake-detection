@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Agent - AI Voice Platform{% endblock %}
+{% block content %}
+<h2>Agentic AI Assistant</h2>
+<form method="post">
+    <div class="form-group">
+        <label for="agent_prompt">Enter your query:</label>
+        <textarea class="form-control" id="agent_prompt" name="agent_prompt" rows="3" placeholder="Ask your question here..."></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Query</button>
+</form>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ 'success' if category=='success' else ('danger' if category=='danger' else 'info') }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+{% endblock %}

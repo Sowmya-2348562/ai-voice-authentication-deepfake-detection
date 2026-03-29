@@ -1,0 +1,114 @@
+/* ========================== style.css ========================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Theme Variables */
+body.dark-mode {
+  --bg-color: #121212;
+  --text-color: #f8f9fa;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --hero-gradient: linear-gradient(to right, #4b6cb7, #182848);
+  --highlight: #00f9a6;
+}
+
+body.light-mode {
+  --bg-color: #ffffff;
+  --text-color: #212529;
+  --card-bg: #f1f1f1;
+  --hero-gradient: linear-gradient(to right, #74ebd5, #acb6e5);
+  --highlight: #1d3557;
+}
+
+/* Hero Section */
+.hero-section {
+  height: 100vh;
+  background: var(--hero-gradient);
+  color: #fff;
+  text-align: center;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.text-glow {
+  color: var(--highlight);
+  text-shadow: 0 0 10px var(--highlight);
+}
+
+/* Glass Cards */
+.glass-card, .agent-glass-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover, .agent-glass-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.agent-glass-card img {
+  max-height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Responsive Cards */
+@media (max-width: 768px) {
+  .hero-section {
+    height: auto;
+    padding: 60px 20px;
+  }
+}
+
+/* Scroll Animations */
+[data-aos] {
+  opacity: 0;
+  transition-property: opacity, transform;
+}
+
+/* Buttons */
+.btn {
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+  background-color: #343a40;
+  color: #ffffff;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Alert Messages */
+.alert {
+  margin-top: 1rem;
+  border-radius: 8px;
+}
+
+/* AOS Override Fix */
+html[data-aos-delay] [data-aos],
+[data-aos][data-aos-delay] {
+  transition-delay: inherit !important;
+}

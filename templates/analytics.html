@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}System Analytics & Voice Tracker{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="text-center mb-4 fw-bold text-gradient">📊 System Analytics & Voice Tracker</h2>
+
+  <div class="mb-4 d-flex justify-content-between">
+    <input class="form-control me-2 w-50" placeholder="Search by File Name">
+    <input type="date" class="form-control w-25">
+    <button class="btn btn-outline-primary">🔍 Filter</button>
+  </div>
+
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-warning fw-bold">🗂️ Voice Authentication Logs</div>
+    <div class="card-body">
+      {{ table | safe }}
+      <a href="data:text/csv;base64,{{ csv_data }}" download="auth_logs.csv" class="btn btn-sm btn-outline-success mt-3 float-end">⬇️ Download CSV</a>
+    </div>
+  </div>
+
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-danger text-white fw-bold">🎯 Similarity Score Distribution</div>
+    <div class="card-body d-flex justify-content-center">
+      <img src="data:image/png;base64,{{ plot_url1 }}" class="img-fluid rounded" style="max-width:600px;">
+    </div>
+  </div>
+
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-primary text-white fw-bold">📈 Upload Trends Over Time</div>
+    <div class="card-body">
+      {{ plotly_html | safe }}
+    </div>
+  </div>
+
+  {% if module_bar and module_pie %}
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-success text-white fw-bold">📊 Module Usage Frequency</div>
+        <div class="card-body text-center">
+          <img src="data:image/png;base64,{{ module_bar }}" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-info text-dark fw-bold">🥧 Module Usage Share</div>
+        <div class="card-body text-center">
+          <img src="data:image/png;base64,{{ module_pie }}" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-dark text-white fw-bold">🕵️ Recent System Logs</div>
+    <ul class="list-group list-group-flush">
+      {% if recent_logs %}
+        {% for log in recent_logs %}
+          <li class="list-group-item">
+            <strong>{{ log.module }}</strong> | File: <em>{{ log.file_name }}</em> | Result: {{ log.result }} <br>
+            <small class="text-muted">Extra: {{ log.extra_info }} | {{ log.timestamp }}</small>
+          </li>
+        {% endfor %}
+      {% else %}
+        <li class="list-group-item text-muted">No recent module activity logged.</li>
+      {% endif %}
+    </ul>
+  </div>
+</div>
+
+<style>
+.text-gradient {
+  background: linear-gradient(to right, #007cf0, #00dfd8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+</style>
+{% endblock %}

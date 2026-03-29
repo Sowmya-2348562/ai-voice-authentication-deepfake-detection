@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Podcast Playlist - AI Voice Platform{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="fw-bold mb-4 text-center text-primary">🎧 Podcast Playlist Summary</h2>
+
+  <!-- Upload Form -->
+  <div class="card shadow-sm mb-5 border-0">
+    <div class="card-body bg-light">
+      <form action="{{ url_for('podcast') }}" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="podcast_files" class="form-label fw-semibold">📤 Upload Podcast Files</label>
+          <input class="form-control" type="file" name="podcast_files" id="podcast_files" multiple>
+        </div>
+        <div class="mb-3">
+          <label for="metadata" class="form-label fw-semibold">📝 Metadata (Optional)</label>
+          <input type="text" class="form-control" name="metadata" id="metadata" placeholder="e.g. AI Daily News, Guest: Dr. Smith">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">🚀 Upload Podcasts</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Playlist Display -->
+  {% if playlist %}
+    <div class="row">
+      {% for episode in playlist %}
+        <div class="col-lg-6 col-md-12 mb-4">
+          <div class="card border-0 shadow podcast-card h-100">
+            <div class="card-body">
+              <h5 class="card-title text-primary">🎙️ {{ episode["file_name"] }}</h5>
+              <p class="card-text">
+                <strong>Duration:</strong>
+                {% if episode["duration"] is number %}
+                  {{ episode["duration"] | round(2) }} seconds
+                {% else %}
+                  {{ episode["duration"] }}
+                {% endif %}
+              </p>
+              <p class="card-text">
+                <strong>📝 Transcript:</strong>
+                <details>
+                  <summary class="text-muted">View Full Transcript</summary>
+                  <p class="mt-2 text-muted small">{{ episode["transcript"] }}</p>
+                </details>
+              </p>
+              
+              <p class="card-text">
+                <strong>📌 Metadata:</strong> {{ episode["metadata"] or 'N/A' }}
+              </p>
+              <p class="card-text">
+                <strong>💬 Sentiment:</strong> {{ episode["sentiment"] or 'Neutral' }}
+              </p>
+              <p class="card-text">
+                <strong>🧠 Topics:</strong>
+                {% for tag in episode["topics"].split(',') %}
+                  <span class="badge bg-info text-dark me-1">{{ tag.strip() }}</span>
+                {% endfor %}
+              </p>
+              
+              <p class="card-text">
+                <strong>🗣️ Summary:</strong> {{ episode["summary"] or 'No summary available.' }}
+              </p>
+              <p class="card-text">
+                <small class="text-muted">🕒 Uploaded at {{ episode["timestamp"] }}</small>
+              </p>
+              {% if episode["audio_path"] %}
+                <audio controls class="w-100 mt-3">
+                  <source src="{{ url_for('static', filename=episode['audio_path']) }}" type="audio/wav">
+                  Your browser does not support the audio element.
+                </audio>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center fade-in">
+      📭 No podcasts available at the moment. Upload and get started!
+    </div>
+  {% endif %}
+</div>
+
+<style>
+  body {
+    background: linear-gradient(to right, #fbe9e7, #e3f2fd);
+  }
+  .podcast-card {
+    transition: transform 0.3s ease-in-out;
+  }
+  .podcast-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  .fade-in {
+    animation: fadeIn 1s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block title %}Modules{% endblock %}
+{% block content %}
+<h2 class="mb-4">Platform Modules</h2>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col">
+    <div class="card h-100 border-primary">
+      <div class="card-body">
+        <h5 class="card-title">🎙️ Voice Authentication</h5>
+        <p class="card-text">Verify speaker identity using voice biometrics.</p>
+        <a href="/authenticate" class="btn btn-primary">Try Now</a>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100 border-danger">
+      <div class="card-body">
+        <h5 class="card-title">🕵️ Deepfake Detection</h5>
+        <p class="card-text">Detect AI-generated or spoofed voice samples.</p>
+        <a href="/deepfake" class="btn btn-danger">Detect</a>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100 border-success">
+      <div class="card-body">
+        <h5 class="card-title">📊 Analytics</h5>
+        <p class="card-text">View similarity trends, upload logs, and voice tracking.</p>
+        <a href="/analytics" class="btn btn-success">View Insights</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

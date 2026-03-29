@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}Conversational Voice Login{% endblock %}
+{% block content %}
+<section class="container mt-5">
+  <h2 class="text-center mb-4">🎤 Conversational Voice Authentication</h2>
+  <p class="text-center">Speak naturally: "Hi, I'm [Your Name], my passcode is [Secret Phrase]"</p>
+
+  <!-- Lottie Loader Overlay -->
+  <div id="lottieLoader" class="loader-overlay">
+    <lottie-player
+      src="{{ url_for('static', filename='lottie/speech-loader.json') }}"
+      background="transparent"
+      speed="1"
+      style="width: 120px; height: 120px;"
+      loop
+      autoplay>
+    </lottie-player>
+  </div>
+
+  <form method="POST" enctype="multipart/form-data" action="/converse_auth" id="authForm">
+    <div class="text-center">
+      <button type="button" class="btn btn-danger" id="startBtn">🔴 Start Recording</button>
+      <button type="button" class="btn btn-secondary" id="stopBtn" disabled>⏹️ Stop Recording</button>
+    </div>
+    <input type="hidden" name="audio_data" id="audioDataInput">
+    <div class="mt-4 text-center">
+      <audio id="playback" controls style="display: none;"></audio>
+    </div>
+    <div class="mt-3 text-center">
+      <button type="submit" class="btn btn-primary">✅ Submit Voice</button>
+    </div>
+  </form>
+
+  {% if result %}
+    <div class="mt-5 text-center">
+      <h4 class="text-success" id="successMessage">{{ result }}</h4>
+    </div>
+  {% endif %}
+</section>
+
+<!-- Scripts -->
+<script>
+  let chunks = [];
+  let recorder, stream;
+  const startBtn = document.getElementById("startBtn");
+  const stopBtn = document.getElementById("stopBtn");
+  const playback = document.getElementById("playback");
+  const audioDataInput = document.getElementById("audioDataInput");
+  const form = document.getElementById("authForm");
+  const loader = document.getElementById("lottieLoader");
+
+  startBtn.onclick = async () => {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    recorder = new MediaRecorder(stream);
+    chunks = [];
+    recorder.ondataavailable = e => chunks.push(e.data);
+    recorder.onstop = async () => {
+      const blob = new Blob(chunks, { type: 'audio/webm' });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        audioDataInput.value = reader.result;
+        playback.src = reader.result;
+        playback.style.display = 'block';
+      };
+      reader.readAsDataURL(blob);
+    };
+    recorder.start();
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+  };
+
+  stopBtn.onclick = () => {
+    recorder.stop();
+    stream.getTracks().forEach(track => track.stop());
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+  };
+
+  form.addEventListener("submit", () => {
+    loader.style.display = "flex";
+  });
+</script>
+
+<!-- Loader Styles -->
+<style>
+  .loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+</style>
+{% endblock %}

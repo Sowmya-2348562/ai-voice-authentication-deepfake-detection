@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Whisper Agent - AI Voice Platform{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Whisper-based Transcription Agent</h2>
+    <p>Upload an audio file (.wav) to transcribe speech using Whisper.</p>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="audio_file">Upload Audio File:</label>
+            <input type="file" class="form-control" id="audio_file" name="audio_file" accept=".wav" required>
+        </div>
+        <button type="submit" class="btn btn-info mt-2">Transcribe</button>
+    </form>
+
+    {% if response %}
+    <div class="alert alert-success mt-4">
+        <strong>Transcription:</strong> {{ response }}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

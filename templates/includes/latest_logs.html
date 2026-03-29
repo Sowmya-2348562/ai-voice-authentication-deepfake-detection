@@ -1,0 +1,28 @@
+<!-- templates/includes/latest_logs.html -->
+<div>
+    <h3>Latest Logs & Alerts</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>File Name</th>
+          <th>Similarity</th>
+          <th>Noise Removed</th>
+          <th>Success</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for log in logs %}
+        <tr>
+          <td>{{ log['id'] }}</td>
+          <td>{{ log['file_name'] }}</td>
+          <td>{{ log['similarity'] }}</td>
+          <td>{{ log['noise_removed'] }}</td>
+          <td>{{ 'Yes' if log['success'] else 'No' }}</td>
+          <td>{{ log['timestamp'] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Model Evaluation - AI Voice Platform{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Model Evaluation Metrics</h2>
+  <ul class="list-group mb-4">
+      <li class="list-group-item">Accuracy: {{ accuracy|round(2) }}</li>
+      <li class="list-group-item">Precision: {{ precision|round(2) }}</li>
+      <li class="list-group-item">Recall: {{ recall|round(2) }}</li>
+      <li class="list-group-item">F1-Score: {{ f1|round(2) }}</li>
+  </ul>
+  <h3>Confusion Matrix</h3>
+  <img src="data:image/png;base64,{{ cm_plot }}" alt="Confusion Matrix" class="img-fluid">
+</div>
+{% endblock %}

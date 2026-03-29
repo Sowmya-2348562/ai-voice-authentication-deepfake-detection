@@ -1,0 +1,31 @@
+<!-- explore_modules.html -->
+{% extends "base.html" %}
+{% block title %}Explore Modules - VoiceSecure{% endblock %}
+{% block content %}
+<section class="container py-5">
+  <h2 class="text-center mb-5">🧭 Explore VoiceSecure Modules</h2>
+  <div class="row g-4">
+    {% for title, route, icon, desc in [
+      ("Voice Authentication", "authenticate", "fa-fingerprint", "Secure login via voice biometrics."),
+      ("Deepfake Detection", "deepfake", "fa-masks-theater", "Spot AI-generated voices."),
+      ("Voice Diarization", "diarization", "fa-users", "Identify multiple speakers."),
+      ("Voice Agent", "voice_agent", "fa-microphone", "Talk to AI assistants."),
+      ("Model Evaluation", "model_eval", "fa-check-double", "ML model metrics and results."),
+      ("Analytics Dashboard", "analytics", "fa-chart-area", "Visual insights & trends."),
+      ("Podcast Transcription", "podcast", "fa-podcast", "Convert voice to text."),
+      
+    ] %}
+    <div class="col-md-4">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <i class="fa {{ icon }} fa-2x mb-2 text-secondary"></i>
+          <h5 class="card-title">{{ title }}</h5>
+          <p class="card-text">{{ desc }}</p>
+          <a href="{{ url_for(route) }}" class="btn btn-outline-secondary">Explore</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

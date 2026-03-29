@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Voice Assistant - AI Voice Platform{% endblock %}
+{% block content %}
+<h2>AI Voice Assistant</h2>
+<p>Ask me about scheduling meetings, adding contacts, web searches, and more!</p>
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="assistant_prompt">Enter a prompt:</label>
+        <textarea class="form-control" id="assistant_prompt" name="assistant_prompt" rows="3" placeholder="e.g., Schedule a meeting with John tomorrow at 2 PM."></textarea>
+    </div>
+    <div class="form-group">
+        <label for="assistant_file">Or upload a voice query (.wav):</label>
+        <input type="file" class="form-control-file" id="assistant_file" name="assistant_file" accept=".wav">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Query</button>
+</form>
+{% endblock %}

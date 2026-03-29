@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Qwen Agent - VoiceSecure{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Qwen-based Agent</h2>
+  <p>Enter your query below. This agent uses qwen-2.5-32b for general conversation.</p>
+  <form method="post">
+    <div class="form-group">
+      <label for="prompt">Your Query:</label>
+      <textarea class="form-control" id="prompt" name="prompt" rows="3" placeholder="E.g., 'Who is Elon Musk?'"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+  </form>
+  {% if response %}
+  <div class="alert alert-info mt-4"><strong>Qwen Response:</strong> {{ response }}</div>
+  {% endif %}
+</div>
+{% endblock %}

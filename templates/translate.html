@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Translate{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="mb-4">🌐 Multilingual Speech Translator</h2>
+  <form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label class="form-label">🎙️ Upload WAV File</label>
+      <input class="form-control" type="file" name="audio_file" accept=".wav" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">🌍 Target Language</label>
+      <select class="form-select" name="target_lang">
+        <option value="en" {% if selected_lang=="en" %}selected{% endif %}>English</option>
+        <option value="hi" {% if selected_lang=="hi" %}selected{% endif %}>Hindi</option>
+        <option value="fr" {% if selected_lang=="fr" %}selected{% endif %}>French</option>
+        <option value="es" {% if selected_lang=="es" %}selected{% endif %}>Spanish</option>
+        <option value="de" {% if selected_lang=="de" %}selected{% endif %}>German</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Transcribe & Translate</button>
+  </form>
+
+  {% if transcription %}
+  <hr>
+  <h4>📝 Transcription:</h4>
+  <p>{{ transcription }}</p>
+  {% endif %}
+
+  {% if translation %}
+  <h4>🌍 Translated:</h4>
+  <p>{{ translation }}</p>
+  {% endif %}
+</div>
+{% endblock %}

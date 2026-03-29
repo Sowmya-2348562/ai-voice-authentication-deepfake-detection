@@ -1,0 +1,107 @@
+<!-- ========================== home.html ========================== -->
+{% extends 'base.html' %}
+{% block title %}Welcome | VoiceSecure{% endblock %}
+
+{% block content %}
+<!-- ================== Hero Section ================== -->
+<section class="hero-section d-flex align-items-center justify-content-center text-white py-5" style="background: linear-gradient(to right, #0f2027, #203a43, #2c5364);">
+  <div class="container text-center" data-aos="zoom-in">
+    <h1 class="display-3 fw-bold mb-3 text-white" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.8);">
+      Welcome to <span class="highlight text-warning">VoiceSecure</span>
+    </h1>
+    <p class="lead text-light mb-4">Your AI-Powered Solution for Voice Authentication & Deepfake Detection</p>
+    <div class="d-flex justify-content-center gap-4">
+      <a href="{{ url_for('authenticate') }}" class="btn btn-lg btn-success px-4 py-2 shadow">
+        <i class="fa fa-lock me-2"></i>Start Authentication
+      </a>
+      <a href="{{ url_for('register_voice') }}" class="btn btn-lg btn-warning px-4 py-2 shadow">
+        <i class="fa fa-microphone me-2"></i>Register Voice
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================== Platform Features ================== -->
+<section class="features-section py-5 bg-light">
+  <div class="container">
+    <h2 class="section-heading text-center" data-aos="fade-up">✨ Platform Capabilities</h2>
+    <div class="row g-4 mt-4">
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="feature-card p-4 shadow rounded text-center">
+          <i class="fa fa-wave-square fa-3x mb-3 text-primary"></i>
+          <h5>Voice Authentication</h5>
+          <p>Verify identity through voice using MFCC + similarity scoring.</p>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="feature-card p-4 shadow rounded text-center">
+          <i class="fa fa-robot fa-3x mb-3 text-danger"></i>
+          <h5>Deepfake Detection</h5>
+          <p>Detect AI-generated voice using trained ML models.</p>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="feature-card p-4 shadow rounded text-center">
+          <i class="fa fa-chart-line fa-3x mb-3 text-success"></i>
+          <h5>Analytics & Logs</h5>
+          <p>Track voice uploads, similarity scores, and trends.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== AI Agents Section ================== -->
+<section id="agents" class="py-5 bg-dark text-white">
+  <div class="container">
+    <h2 class="section-heading text-center" data-aos="fade-up">🧠 Meet the AI Agents</h2>
+    <div class="row g-4 mt-4">
+
+      <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+        <div class="agent-card p-3 bg-gradient border rounded text-center">
+          <img src="{{ url_for('static', filename='images/agent_qwen.jpg') }}" class="img-fluid rounded-circle mb-3" alt="Qwen Agent">
+          <h5>Qwen Agent</h5>
+          <p class="small">Conversational LLM with context awareness.</p>
+          <a href="{{ url_for('qwen_agent_route') }}" class="btn btn-outline-light btn-sm">Chat Now</a>
+        </div>
+      </div>
+
+      <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+        <div class="agent-card p-3 bg-gradient border rounded text-center">
+          <img src="{{ url_for('static', filename='images/agent_multi.jpg') }}" class="img-fluid rounded-circle mb-3" alt="Multi-Agent Team">
+          <h5>Multi-Agent Team</h5>
+          <p class="small">Get multi-perspective answers.</p>
+          <a href="{{ url_for('multi_agent_route') }}" class="btn btn-outline-light btn-sm">Ask Team</a>
+        </div>
+      </div>
+
+      <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+        <div class="agent-card p-3 bg-gradient border rounded text-center">
+          <img src="{{ url_for('static', filename='images/agent_whisper.jpg') }}" class="img-fluid rounded-circle mb-3" alt="Whisper Agent">
+          <h5>Whisper Agent</h5>
+          <p class="small">Transcribe any audio input with Whisper.</p>
+          <a href="{{ url_for('whisper_agent_route') }}" class="btn btn-outline-light btn-sm">Transcribe</a>
+        </div>
+      </div>
+
+      <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+        <div class="agent-card p-3 bg-gradient border rounded text-center">
+          <img src="{{ url_for('static', filename='images/agent_deepseek.jpg') }}" class="img-fluid rounded-circle mb-3" alt="Deepseek Agent">
+          <h5>Deepseek Agent</h5>
+          <p class="small">Generate detailed responses for complex topics.</p>
+          <a href="{{ url_for('deepseek_agent_route') }}" class="btn btn-outline-light btn-sm">Explore</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================== Call to Action ================== -->
+<section class="text-center py-5 bg-light" data-aos="fade-up">
+  <h2 class="fw-bold mb-4">All-in-One AI Voice Platform</h2>
+  <p class="lead text-muted">Crafted by Sowmya using Python, Flask, SQLite, Librosa, Plotly, and Groq API</p>
+  <a href="{{ url_for('explore_modules') }}" class="btn btn-warning btn-lg px-4 mt-3">Explore Modules</a>
+</section>
+{% endblock %}

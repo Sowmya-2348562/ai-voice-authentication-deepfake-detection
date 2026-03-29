@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Voice Diarization{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="fw-bold mb-4">🧠 Voice Diarization</h2>
+
+  <form method="post" enctype="multipart/form-data" class="mb-4">
+    <div class="mb-3">
+      <label for="voice_file" class="form-label">🎙️ Upload a .wav file:</label>
+      <input type="file" class="form-control" name="voice_file" id="voice_file" accept=".wav">
+    </div>
+    <button type="submit" class="btn btn-primary">▶️ Process Diarization</button>
+  </form>
+
+  {% if segments %}
+    <div class="card mt-4 shadow-sm border-primary">
+      <div class="card-header bg-primary text-white fw-bold">
+        🔊 Detected Speaker Segments
+      </div>
+      <ul class="list-group list-group-flush">
+        {% for seg in segments %}
+          <li class="list-group-item">
+            <span class="fw-semibold">{{ seg.speaker }}</span>: {{ seg.start|round(2) }}s - {{ seg.end|round(2) }}s
+            <span class="badge bg-info text-dark ms-2">Confidence: {{ seg.confidence|default(0.97)|round(2) }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <div class="mt-4">
+        <h5 class="fw-bold">🎨 Timeline View</h5>
+        <div class="timeline-bar">
+          {% for seg in segments %}
+            <div class="segment-block {{ seg.speaker | lower | replace(' ', '-') }}" style="width: {{ (seg.end - seg.start) * 10 }}px" title="{{ seg.speaker }}: {{ seg.start|round(2) }}s - {{ seg.end|round(2) }}s"></div>
+          {% endfor %}
+        </div>
+        <p class="text-muted small mt-2">Each colored block represents a speaker segment proportional to duration.</p>
+      </div>
+
+      <div class="mt-4">
+        <h5 class="fw-bold">📊 Talk Time Distribution</h5>
+        <div class="d-flex justify-content-center mt-3">
+          <div style="width: 300px; height: 300px;">
+            <canvas id="talkTimeChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const ctx = document.getElementById('talkTimeChart').getContext('2d');
+      const talkTimeChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: {{ pie_labels | safe }},
+          datasets: [{
+            label: 'Talk Time (s)',
+            data: {{ pie_values | safe }},
+            backgroundColor: [
+              '#42a5f5', '#66bb6a', '#ffa726'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom' },
+            title: { display: true, text: 'Speaker Talk Time (%)' }
+          }
+        }
+      });
+    </script>
+  {% endif %}
+</div>
+
+<style>
+  body {
+    background: linear-gradient(to right, #f8f9fa, #e3f2fd);
+  }
+  .list-group-item {
+    transition: all 0.2s ease-in-out;
+  }
+  .list-group-item:hover {
+    background-color: #f0f8ff;
+    transform: scale(1.02);
+  }
+  .timeline-bar {
+    display: flex;
+    height: 24px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .segment-block {
+    height: 100%;
+  }
+  .speaker-1 { background-color: #42a5f5; }
+  .speaker-2 { background-color: #66bb6a; }
+  .speaker-3 { background-color: #ffa726; }
+</style>
+{% endblock %}

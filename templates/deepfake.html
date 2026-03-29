@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}Deepfake Detection{% endblock %}
+
+{% block content %}
+    <h1>Deepfake Detection</h1>
+    <p>Upload an audio file or record live to check if it's a real voice or an AI-generated deepfake.</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="voice_file" class="form-label">Upload Audio File (WAV format)</label>
+            <input type="file" class="form-control" id="voice_file" name="voice_file" accept=".wav">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Or record your voice:</label>
+            <button type="button" class="btn btn-success" id="start-record">🎙️ Start Recording</button>
+            <button type="button" class="btn btn-danger" id="stop-record" disabled>⏹️ Stop</button>
+            <audio id="live-audio" controls class="mt-3" style="display:none;"></audio>
+            <input type="hidden" name="live_audio_data" id="live_audio_data">
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Analyze</button>
+    </form>
+
+    {% if prediction_label %}
+      <script>
+        window.onload = () => new bootstrap.Modal(document.getElementById('resultModal')).show();
+      </script>
+
+      <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title" id="resultModalLabel">🔍 Deepfake Detection Summary</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              {% if source_type == 'live' %}
+                <p class="text-success fw-bold">🎤 Live Recording Detected</p>
+                <p><strong>Prediction:</strong> ✅ Human Voice Detected</p>
+                <div class="badge bg-success mt-2 p-2 rounded-pill">✅ Verified Human</div>
+                <p class="text-muted">System trusted this voice as it came from a live human interaction.</p>
+              {% else %}
+                <p><strong>Prediction:</strong> {{ prediction_label }}</p>
+                <p><strong>Confidence Score:</strong> {{ confidence_score }}%</p>
+                <p><strong>Transcript:</strong> {{ transcript }}</p>
+              {% endif %}
+            </div>
+            <div class="modal-footer">
+              <a href="/download_report?source_type={{ source_type }}&prediction={{ prediction_label }}&confidence={{ confidence_score }}&transcript={{ transcript }}" class="btn btn-outline-dark">📄 Download Report</a>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="mt-4">
+        {% for category, message in messages %}
+          {% if request.path == url_for('deepfake') %}
+            <div class="alert alert-{{ category }} fade-in" role="alert">
+              {{ message }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  
+
+    {% if transcript and source_type != 'live' %}
+      <div class="card mt-4 shadow-sm border-primary bg-light fade-in">
+        <div class="card-header bg-primary text-white">Transcript</div>
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            <p class="text-secondary fw-semibold">{{ transcript }}</p>
+          </blockquote>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if audio_url %}
+      <div class="mt-4 fade-in">
+        <h5 class="fw-bold">Playback:</h5>
+        <audio controls>
+          <source src="{{ audio_url }}" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    {% endif %}
+
+    {% if waveform_img %}
+        {% set _ = session.__setitem__('waveform_img', waveform_img) %}  <!-- Save to session -->
+        <h3 class="mt-4 fw-bold">Waveform</h3>
+        <p class="text-muted">X-axis: Time (s), Y-axis: Amplitude</p>
+        <img src="data:image/png;base64,{{ waveform_img }}" alt="Waveform" class="visualization-img fade-in rounded border">
+    {% endif %}
+
+    {% if confidence_chart %}
+        <h3 class="mt-4 fw-bold">Confidence Chart</h3>
+        <p class="text-muted">X-axis: Category (Real or AI), Y-axis: Confidence Score</p>
+        <img src="data:image/png;base64,{{ confidence_chart }}" alt="Confidence Chart" class="visualization-img fade-in rounded border">
+    {% endif %}
+
+    <script>
+      let mediaRecorder;
+      let audioChunks = [];
+
+      document.getElementById('start-record').addEventListener('click', async () => {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+
+        audioChunks = [];
+        mediaRecorder.ondataavailable = event => {
+          if (event.data.size > 0) {
+            audioChunks.push(event.data);
+          }
+        };
+
+        mediaRecorder.onstop = async () => {
+          const blob = new Blob(audioChunks, { type: 'audio/wav' });
+          const reader = new FileReader();
+
+          reader.onloadend = () => {
+            document.getElementById('live_audio_data').value = reader.result;
+            const audioURL = URL.createObjectURL(blob);
+            const audioElement = document.getElementById('live-audio');
+            audioElement.src = audioURL;
+            audioElement.style.display = 'block';
+          };
+
+          reader.readAsDataURL(blob);
+        };
+
+        mediaRecorder.start();
+        document.getElementById('start-record').disabled = true;
+        document.getElementById('stop-record').disabled = false;
+      });
+
+      document.getElementById('stop-record').addEventListener('click', () => {
+        mediaRecorder.stop();
+        document.getElementById('start-record').disabled = false;
+        document.getElementById('stop-record').disabled = true;
+      });
+    </script>
+
+    <style>
+      .pulse-card {
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2); }
+        70% { transform: scale(1.02); box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.1); }
+        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+      }
+      .fade-in {
+        animation: fadeInUp 0.8s ease-in-out;
+      }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      body {
+        background: linear-gradient(to right, #e0f7fa, #fff3e0);
+      }
+    </style>
+{% endblock %}

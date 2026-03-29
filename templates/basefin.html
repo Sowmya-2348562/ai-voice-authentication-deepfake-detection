@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}AI Voice Platform{% endblock %}</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="bg-dark text-white p-3">
+      <div class="container">
+          <h1 class="mb-0">AI Voice Platform</h1>
+          <nav class="mt-2">
+              <a href="{{ url_for('home') }}" class="text-white mr-3">Home</a>
+              <a href="{{ url_for('authenticate') }}" class="text-white mr-3">Authenticate</a>
+              <a href="{{ url_for('deepfake') }}" class="text-white mr-3">Deepfake</a>
+              <a href="{{ url_for('model_eval') }}" class="text-white mr-3">Model Eval</a>
+              <a href="{{ url_for('compare') }}" class="text-white mr-3">Compare</a>
+              <a href="{{ url_for('diarization') }}" class="text-white mr-3">Diarization</a>
+              <a href="{{ url_for('tracker') }}" class="text-white mr-3">Tracker</a>
+              <a href="{{ url_for('podcast') }}" class="text-white mr-3">Podcast</a>
+              <a href="{{ url_for('voice_agent') }}" class="text-white mr-3">Voice Agent</a>
+              <a href="{{ url_for('generative') }}" class="text-white mr-3">Generative</a>
+              <a href="{{ url_for('analytics') }}" class="text-white">Analytics</a>
+          </nav>
+      </div>
+  </header>
+  <main class="container my-4">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+              {% for category, message in messages %}
+                  <div class="alert alert-{{ 'success' if category=='success' else ('danger' if category=='danger' else 'info') }} alert-dismissible fade show" role="alert">
+                      {{ message }}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+              {% endfor %}
+          {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+  </main>
+  <footer class="bg-dark text-white text-center p-3">
+      &copy; 2025 AI Voice Platform
+  </footer>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

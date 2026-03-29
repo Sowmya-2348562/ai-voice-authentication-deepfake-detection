@@ -1,0 +1,72 @@
+<!-- ========================== dashboard.html ========================== -->
+{% extends "base.html" %}
+{% block title %}Dashboard - VoiceSecure{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light min-vh-100">
+  <div class="container">
+    <h2 class="section-heading mb-4 text-center" data-aos="fade-up">📊 Voice Authentication Dashboard</h2>
+    <div class="row g-4">
+      <div class="col-md-4" data-aos="fade-right">
+        <div class="card dashboard-card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Register New Voice</h5>
+            <p class="card-text small">Upload or record your voice sample to register it in the system.</p>
+            <a href="{{ url_for('register_voice') }}" class="btn btn-gradient-green btn-sm">Register Voice</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4" data-aos="fade-up">
+        <div class="card dashboard-card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Authenticate User</h5>
+            <p class="card-text small">Verify speaker identity via uploaded or live-recorded voice.</p>
+            <a href="{{ url_for('authenticate') }}" class="btn btn-gradient-yellow btn-sm">Start Authentication</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4" data-aos="fade-left">
+        <div class="card dashboard-card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Detect Deepfake</h5>
+            <p class="card-text small">Detect whether a voice sample is human or AI-generated.</p>
+            <a href="{{ url_for('deepfake') }}" class="btn btn-gradient-red btn-sm">Deepfake Detection</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6" data-aos="zoom-in">
+        <div class="card dashboard-card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">📈 Voice Analytics</h5>
+            <p class="card-text small">View trends and metrics of similarity scores and uploads.</p>
+            <a href="{{ url_for('analytics') }}" class="btn btn-primary btn-sm">View Analytics</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6" data-aos="zoom-in">
+        <div class="card dashboard-card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">🎧 Voice Tracker</h5>
+            <p class="card-text small">Track voice authentication attempts and similarity logs.</p>
+            <a href="{{ url_for('tracker') }}" class="btn btn-dark btn-sm">Go to Tracker</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12" data-aos="fade-up">
+        <div class="card dashboard-card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">🤖 Voice AI Agents</h5>
+            <p class="card-text small">Explore our advanced language agents for transcription and chat.</p>
+            <a href="{{ url_for('voice_agent') }}" class="btn btn-outline-secondary btn-sm">Meet Agents</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

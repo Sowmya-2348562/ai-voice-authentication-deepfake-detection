@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Generative Chat - AI Voice Platform{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Generative Chat</h2>
+  <form method="POST" action="{{ url_for('generative') }}">
+    <div class="mb-3">
+      <label for="prompt" class="form-label">Enter Your Prompt</label>
+      <textarea class="form-control" name="prompt" id="prompt" rows="3" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Prompt</button>
+  </form>
+  <hr>
+  <h3>Conversation History</h3>
+  {% if history %}
+    <ul class="list-group">
+      {% for entry in history %}
+        <li class="list-group-item">
+          <strong>Prompt:</strong> {{ entry.prompt }}<br>
+          <strong>Response:</strong> {{ entry.response }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No conversation history yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

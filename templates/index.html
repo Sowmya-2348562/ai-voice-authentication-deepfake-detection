@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Agents Hub</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container-fluid hero-section d-flex flex-column justify-content-center align-items-center">
+    <h1 class="display-4 text-center mb-4">Welcome to the AI Agents Hub</h1>
+    <p class="lead text-center mb-5">Experience next-gen conversational intelligence with our GroqAPI-powered agents.</p>
+  </div>
+
+  <div class="container mt-5">
+    <!-- Agent Cards -->
+    <div class="row">
+      <!-- Qwen Agent Card -->
+      <div class="col-md-3 mb-4">
+        <div class="card agent-card">
+          <div class="card-body">
+            <h5 class="card-title">Qwen Agent</h5>
+            <p class="card-text">Chat with a state-of-the-art conversational agent.</p>
+            <button class="btn btn-primary agent-btn" data-toggle="modal" data-target="#textQueryModal" data-agent="Qwen Agent">
+              Try It
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Multi-Agent Team Card -->
+      <div class="col-md-3 mb-4">
+        <div class="card agent-card">
+          <div class="card-body">
+            <h5 class="card-title">Multi-Agent Team</h5>
+            <p class="card-text">Collaborative insights from a team of experts.</p>
+            <button class="btn btn-primary agent-btn" data-toggle="modal" data-target="#textQueryModal" data-agent="Multi-Agent Team">
+              Try It
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Whisper Agent Card -->
+      <div class="col-md-3 mb-4">
+        <div class="card agent-card">
+          <div class="card-body">
+            <h5 class="card-title">Whisper Agent</h5>
+            <p class="card-text">Accurate audio transcription using Groq's Whisper.</p>
+            <button class="btn btn-primary agent-btn" data-toggle="modal" data-target="#audioModal" data-agent="Whisper Agent">
+              Try It
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Deepseek Agent Card -->
+      <div class="col-md-3 mb-4">
+        <div class="card agent-card">
+          <div class="card-body">
+            <h5 class="card-title">Deepseek Agent</h5>
+            <p class="card-text">Deep research responses at your fingertips.</p>
+            <button class="btn btn-primary agent-btn" data-toggle="modal" data-target="#textQueryModal" data-agent="Deepseek Agent">
+              Try It
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- (Modals defined in home.html are shared with index.html) -->
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/recorder.js') }}"></script>
+  <script>
+    // Same modal setup as in home.html
+    $('#textQueryModal').on('show.bs.modal', function(e) {
+      const agent = $(e.relatedTarget).data('agent');
+      $('#textAgentName').val(agent);
+      $('#textResponse').val('');
+      $('#queryInput').val('');
+    });
+
+    $('#audioModal').on('show.bs.modal', function(e) {
+      const agent = $(e.relatedTarget).data('agent');
+      $('#audioAgentName').val(agent);
+      $('#transcriptionOutput').val('');
+      $('#audioFile').val('');
+      $('#playbackAudio').hide();
+    });
+  </script>
+</body>
+</html>

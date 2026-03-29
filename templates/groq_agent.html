@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Groq Agent - AI Voice Platform{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Groq Agentic AI Assistant</h2>
+  <p>Enter your query below and our single agent will respond using Groq and DuckDuckGo tools.</p>
+  <form method="post">
+      <div class="form-group">
+          <label for="prompt">Your Query:</label>
+          <textarea class="form-control" id="prompt" name="prompt" rows="3" placeholder="e.g., 'Who is Elon Musk?'"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit Query</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Speech Translation{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(to right, #fefcea, #f1da36);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  .translate-card {
+    background: #ffffff;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 30px;
+    animation: fadeInUp 0.9s ease-in-out;
+  }
+  .form-label, label {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  .language-select {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .translated-box, .transcribed-box, .emotion-box, .live-caption-box {
+    background: #fffdf2;
+    border-left: 6px solid #ffc107;
+    padding: 18px;
+    margin-top: 18px;
+    border-radius: 10px;
+    animation: fadeIn 1s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  select.form-select {
+    max-width: 250px;
+  }
+  button.btn-primary {
+    background-color: #ff9800;
+    border-color: #ff9800;
+  }
+  button.btn-primary:hover {
+    background-color: #e68900;
+  }
+  .card-header {
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+</style>
+
+<div class="translate-card">
+  <form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="audio_file"><i class="bi bi-mic-fill"></i> 🎙️ Upload WAV File</label>
+      <input type="file" name="audio_file" class="form-control" accept=".wav" required>
+    </div>
+
+    <div class="mb-3 language-select">
+      <i class="bi bi-globe"></i>
+      <label for="target_lang">🌍 Target Language</label>
+      <select name="target_lang" id="target_lang" class="form-select">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="ta">Tamil</option>
+        <option value="kn">Kannada</option>
+        <option value="te">Telugu</option>
+        <option value="ml">Malayalam</option>
+        <option value="bn">Bengali</option>
+        <option value="gu">Gujarati</option>
+        <option value="mr">Marathi</option>
+        <option value="ur">Urdu</option>
+        <option value="pa">Punjabi</option>
+        <option value="or">Odia</option>
+        <option value="fr">French</option>
+        <option value="de">German</option>
+        <option value="ja">Japanese</option>
+        <option value="zh-cn">Chinese (Simplified)</option>
+        <option value="ru">Russian</option>
+        <option value="es">Spanish</option>
+        <option value="it">Italian</option>
+        <option value="ko">Korean</option>
+      </select>
+      <button type="submit" class="btn btn-primary">🌐 Translate</button>
+    </div>
+  </form>
+
+  {% if transcribed %}
+    <div class="transcribed-box">
+      <h5><i class="bi bi-file-text"></i> 📝 Transcribed Text:</h5>
+      <p>{{ transcribed }}</p>
+    </div>
+  {% endif %}
+
+  {% if translated %}
+    <div class="translated-box">
+      <h5><i class="bi bi-translate"></i> 🌍 Translated Text:</h5>
+      <p>{{ translated }}</p>
+    </div>
+  {% endif %}
+
+  {% if emotion %}
+    <div class="emotion-box">
+      <h5><i class="bi bi-emoji-smile"></i> 🎭 Detected Emotion:</h5>
+      <p>{{ emotion }}</p>
+    </div>
+  {% endif %}
+
+  {% if live_caption %}
+    <div class="live-caption-box">
+      <h5><i class="bi bi-chat-dots"></i> 💬 Live Captions:</h5>
+      <p>{{ live_caption }}</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
