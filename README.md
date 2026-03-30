@@ -164,6 +164,8 @@ python app.py
 
 ![Image 1](https://github.com/Sowmya-2348562/ai-voice-authentication-deepfake-detection/blob/08109cb28cf6d85070fd7f33919188808124ec99/assets/Screenshot%202026-03-30%20023326.png)
 
+<img src="assets/Voice.png" width="600">
+
 ![Image](assets/Screenshot 2026-03-30 175704.png)
 
 ![Image](assets/Screenshot 2026-03-30 180135.png)
