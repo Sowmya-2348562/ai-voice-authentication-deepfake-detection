@@ -247,7 +247,7 @@ python app.py
 - 🌍 Multilingual voice-based applications
 
 ---
-Model Comparison and Final Remarks
+## Model Comparison and Final Remarks
 Based on the evaluation metrics, confusion matrices, and training curves:
 • Best Performing Model: CNN-LSTM (Combined Dataset) – demonstrated
 superior accuracy, stable training, and minimal misclassifications, making it ideal
@@ -261,7 +261,7 @@ to capture temporal features in audio data.
 Thus, the CNN-LSTM hybrid model was chosen as the final deployment model due to
 its strong generalization, high accuracy, and robustness across diverse audio inputs.
 
-CONCLUSION
+## CONCLUSION
 This project successfully integrates AI-driven analysis with traditional machine
 learning techniques to address the challenges of voice authentication and deepfake
 detection. By combining robust audio feature extraction with multiple classification
