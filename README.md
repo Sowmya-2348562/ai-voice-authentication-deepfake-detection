@@ -160,7 +160,7 @@ python app.py
 
 ## Screenshots
 
-![Image](./assets/Voice.png)
+![Image](assets/Screenshot%202026-03-30%20175704.png)
 
 ![Image 1](https://github.com/Sowmya-2348562/ai-voice-authentication-deepfake-detection/blob/08109cb28cf6d85070fd7f33919188808124ec99/assets/Screenshot%202026-03-30%20023326.png)
 
