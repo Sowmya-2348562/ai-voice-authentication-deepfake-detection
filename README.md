@@ -247,6 +247,30 @@ python app.py
 - 🌍 Multilingual voice-based applications
 
 ---
+Model Comparison and Final Remarks
+Based on the evaluation metrics, confusion matrices, and training curves:
+• Best Performing Model: CNN-LSTM (Combined Dataset) – demonstrated
+superior accuracy, stable training, and minimal misclassifications, making it ideal
+for real-world deployment.
+• Close Second: LSTM (Combined) – effectively models temporal dependencies
+and performs well, though with slightly higher validation loss and fluctuations.
+• Best Classical Model: Random Forest – performed competitively on CSV
+features, offering a fast and interpretable baseline.
+• Least Effective: 1D CNN – showed signs of overfitting and had limited ability
+to capture temporal features in audio data.
+Thus, the CNN-LSTM hybrid model was chosen as the final deployment model due to
+its strong generalization, high accuracy, and robustness across diverse audio inputs.
+
+CONCLUSION
+This project successfully integrates AI-driven analysis with traditional machine
+learning techniques to address the challenges of voice authentication and deepfake
+detection. By combining robust audio feature extraction with multiple classification
+models—including Random Forest, LSTM, CNN-LSTM, and 1D CNN—the system
+offers high accuracy in distinguishing genuine voices from deepfake audio samples.
+A user-friendly Flask web interface allows seamless interaction, real-time feedback,
+and analytics visualization. Overall, this work lays a solid foundation for future
+advancements in secure voice authentication and deepfake mitigation across various
+real-world applications.
 
 ## 👩‍💻 Author
 
